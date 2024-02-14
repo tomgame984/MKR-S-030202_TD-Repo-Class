@@ -1,22 +1,14 @@
-# {{TABLE NAME}} Model and Repository Classes Design Recipe
-
-_Copy this recipe template to design and implement Model and Repository classes for a database table._
+# {{MUSIC LIBRARY}} Model and Repository Classes Design Recipe
 
 ## 1. Design and create the Table
 
-If the table is already created in the database, you can skip this step.
-
-Otherwise, [follow this recipe to design and create the SQL schema for your table](./single_table_design_recipe_template.md).
-
-*In this template, we'll use an example table `students`*
+Table already created.
 
 ```
-# EXAMPLE
-
-Table: students
+Table: music_library_02
 
 Columns:
-id | name | cohort_name
+id | title | release_year | artist_id
 ```
 
 ## 2. Create Test SQL seeds
@@ -26,28 +18,37 @@ Your tests will depend on data stored in PostgreSQL to run.
 If seed data is provided (or you already created it), you can skip this step.
 
 ```sql
--- EXAMPLE
--- (file: spec/seeds_{table_name}.sql)
+-- (file: SEEDS/MUSIC_LIBRARY.sql)
 
--- Write your SQL seed here. 
+DROP TABLE IF EXISTS albums;
+DROP SEQUENCE IF EXISTS albums_id_seq;
 
--- First, you'd need to truncate the table - this is so our table is emptied between each test run,
--- so we can start with a fresh state.
--- (RESTART IDENTITY resets the primary key)
+CREATE SEQUENCE IF NOT EXISTS albums_id_seq;
+CREATE TABLE albums (
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(255),
+    release_year INTEGER,
+    artist_id INTEGER
+);
 
-TRUNCATE TABLE students RESTART IDENTITY; -- replace with your own table name.
-
--- Below this line there should only be `INSERT` statements.
--- Replace these statements with your own seed data.
-
-INSERT INTO students (name, cohort_name) VALUES ('David', 'April 2022');
-INSERT INTO students (name, cohort_name) VALUES ('Anna', 'May 2022');
+INSERT INTO albums (title, release_year, artist_id) VALUES ('Doolittle', 1989, 1);
+INSERT INTO albums (title, release_year, artist_id) VALUES ('Surfer Rosa', 1988, 1);
+INSERT INTO albums (title, release_year, artist_id) VALUES ('Waterloo', 1974, 2);
+INSERT INTO albums (title, release_year, artist_id) VALUES ('Super Trouper', 1980, 2);
+INSERT INTO albums (title, release_year, artist_id) VALUES ('Bossanova', 1990, 1);
+INSERT INTO albums (title, release_year, artist_id) VALUES ('Lover', 2019, 3);
+INSERT INTO albums (title, release_year, artist_id) VALUES ('Folklore', 2020, 3);
+INSERT INTO albums (title, release_year, artist_id) VALUES ('I Put a Spell on You', 1965, 4);
+INSERT INTO albums (title, release_year, artist_id) VALUES ('Baltimore', 1978, 4);
+INSERT INTO albums (title, release_year, artist_id) VALUES ('Here Comes the Sun', 1971, 4);
+INSERT INTO albums (title, release_year, artist_id) VALUES ('Fodder on My Wings', 1982, 4);
+INSERT INTO albums (title, release_year, artist_id) VALUES ('Ring Ring', 1973, 2);
 ```
 
 Run this SQL file on the database to truncate (empty) the table, and insert the seed data. Be mindful of the fact any existing records in the table will be deleted.
 
 ```bash
-psql -h 127.0.0.1 your_database_name < seeds_{table_name}.sql
+psql -h 127.0.0.1 music_library_02 < seeds_albums.sql
 ```
 
 ## 3. Define the class names
