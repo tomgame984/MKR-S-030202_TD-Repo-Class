@@ -9,11 +9,10 @@ class ArtistRepository:
     # Retrieve all artists
     def all(self):
         rows = self._connection.execute('SELECT * from artists')
-        artists = []
-        for row in rows:
-            item = Artist(row["id"], row["name"], row["genre"])
-            artists.append(item)
-        return artists
+        return [Artist(row["id"],
+                       row["name"],
+                       row["genre"])
+                       for row in rows]
 
     # Find a single artist by their id
     def find(self, artist_id):

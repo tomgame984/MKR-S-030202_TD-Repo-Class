@@ -15,7 +15,7 @@ Format albums to strings nicely
 """
 def test_artists_format_nicely():
     album = Album(1, "Test Album", 1984, 2)
-    assert str(album) == "Album: (1 | Test Album | 1984 | 2)"
+    assert str(album) == "Album(1, Test Album, 1984, 2)"
 
 """
 Compare two identical albums
