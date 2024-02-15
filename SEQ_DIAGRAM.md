@@ -6,6 +6,7 @@ sequenceDiagram
     participant db_conn as DatabaseConnection class <br /> (in lib/database_connection.py)
     participant db as Postgres database
 
+
     Note left of t: Flow of time <br />⬇ <br /> ⬇ <br /> ⬇ 
     
     autonumber
